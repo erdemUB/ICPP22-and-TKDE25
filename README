@@ -1,0 +1,50 @@
+Here we explain how to compile the codes.
+
+If you use this code, cite the following paper:
+
+Counting Induced 6-Cycles in Bipartite Graphs
+
+All the datasets used in the paper can be found at https://tinyurl.com/par6cycle-datasets.
+
+Parallel hashmap from https://github.com/greg7mdp/parallel-hashmap.
+
+This code was tested using GCC 10.2.0.
+
+Compilation
+-----------
+
+Compiling Code by CMake (Intel TBB from https://github.com/wjakob/tbb.git):
+
+    1) cmake -B <build_directory>
+
+    2) cd <build_directory>
+
+    3) make
+
+Directly Compiling Code (Requires Intel Threading Building Blocks):
+
+    1) g++ {alg}.cpp -o {alg} preProcessing.cpp utilities.cpp -std=c++17 -O3 -fopenmp -ltbb
+
+    If needed, replace "-ltbb" to link to Intel TBB
+
+Running the Code:
+
+    1) ./{alg} <path_to_dataset> <partition_size?>
+
+{alg}: NJ, WJ, TJ, BTJ (best)
+
+<partition_size?>* is an optional parameter for BTJ algorithm (defaults to all nodes); it is not used for all other algorithms
+
+Dataset format:
+    |E| |U| |V|
+    u1 v1
+    u2 v1
+    u2 v2
+
+Example dataset:
+    3 2 2
+    0 0
+    0 1
+    1 0
+
+* For larger graphs whose memory requirements may exceed the amount of available memory, we can partition the bipartite graph G = (U, V, E) based on a partition size alpha. For each induced 6-cycle, there exists three nodes u_1, u_2, u_3 in U in the order u_1 < u_2 < u_3. We use alpha to determine the number of u_2s processed in each partition. We can partition the input graph G based on a set of u_2s by only considering u_1s and u_3s where there exists a u_2 in the partition satisfying u_1 < u_2 < u_3. Let min_2 and max_2 represent the minimum and maximum elements, respectively, in the partition of u_2s. For the partition, we only have to consider u_1s which are less than max_2 and u_3s which are greater than min_2. With larger partition sizes, a greater proportion of the input graph can be processed in parallel, resulting in higher efficiency. However, more memory will be required for the storage of set intersection sizes since there are more possible u_1, u_3 combinations with a larger partition. The best alpha for an input graph and a parallel computing system is the highest alpha such that there exists enough memory on the parallel machine.
