@@ -2,7 +2,14 @@ Here we explain how to compile the codes.
 
 If you use this code, cite the following paper:
 
-Counting Induced 6-Cycles in Bipartite Graphs
+-   Counting Induced 6-Cycles in Bipartite Graphs
+    J. Niu, J. Zola, and A. E. Sarıyüce
+    ICPP 2022 - International Conference on Parallel Processing
+
+-   Fast Counting and Utilizing Induced 6-Cycles in Bipartite Networks
+    J. Niu, J. Zola, and A. E. Sarıyüce
+    TKDE 2025 - IEEE Transactions on Knowledge and Data Engineering
+
 
 All the datasets used in the paper can be found at https://tinyurl.com/par6cycle-datasets.
 
